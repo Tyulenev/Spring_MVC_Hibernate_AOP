@@ -17,7 +17,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
     private SessionFactory sessionFactory;
 
     @Override
-    @Transactional //Spring открывает и закрывает транзакции
+//    @Transactional //Spring открывает и закрывает транзакции
     public List<Employee> getAllEmployees() {
         Session session = sessionFactory.getCurrentSession();
 
@@ -29,5 +29,19 @@ public class EmployeeDAOImpl implements EmployeeDAO{
         List<Employee> allEmployees = query.getResultList();
 
         return allEmployees;
+    }
+
+    @Override
+    public void saveEmployee(Employee emp) {
+        Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(emp);
+    }
+
+    @Override
+    public Employee getEmployee(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Employee emp = session.get(Employee.class, id);
+
+        return emp;
     }
 }
